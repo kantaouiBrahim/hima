@@ -1,0 +1,22 @@
+nav{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1px;
+    text-align: center;
+  }
+
+  nav>* {
+    text-decoration: none;
+    background: #303030;
+    color: #FFF;
+    text-shadow: 0 0 3px #000;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+  } nav>*:hover{
+    background: lime;
+  }
+
+  .router-link-exact-active{
+    background: lightseagreen;
+  }
