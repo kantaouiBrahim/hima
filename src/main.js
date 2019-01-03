@@ -8,7 +8,7 @@ import uploader from "vue-simple-uploader";
 Vue.use(Notifications)
 Vue.use(uploader)
 
-Vue.use(VueSocketio, '/')
+Vue.use(VueSocketio, 'https://hima-server.netlify.com/')
 
 import store from "./store"
 import "vuetify/dist/vuetify.min.css"
