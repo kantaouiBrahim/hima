@@ -1,0 +1,161 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width">
+<script ></script>
+  
+<script>
+    //const link = "https://api.jsonbin.io/v3/b/672a6b43e41b4d34e44f03b3"
+    const link = "https://script.google.com/macros/s/AKfycbzLyyiiacSCS8cV7phq2r-WGlIgxo4EIKhpmOmS_sjMBF0O2Ar61TaR-0r2ulhgzyQyGQ/exec"
+    
+</script>
+
+<style>
+    body{
+        background: #FFF;
+        color: #222;
+        margin: 0;
+        padding: 0;
+        padding-top: 45px;
+    }
+    
+    button{
+        font-size: 24px;
+        text-align: right;
+        background: aqua;
+        font-weight: bold;
+        display: block;
+        width: 90%;
+        margin: 3px auto;
+        border-radius: 8px;
+        padding: 5px; 
+        padding-right: 15px;
+        
+    }
+    
+    button:active{
+        background: lime; 
+    }
+    
+    .back{
+        display: none;
+        position: fixed;
+        width: fit-content;
+        top: 0;
+        left: 0;
+        font-size: 18px;
+        background: #EE5555AA;
+        color: #eee;
+        padding: 5px 16px;
+        border-radius: 8px;
+        
+    }
+    
+    .back:active{
+        background: red;
+    }
+    
+    img{
+        display: block;
+        width: 100%;
+        
+    }
+    
+    h1{
+        text-align: center;
+        color: darkgreen;
+        font-size: 28px;
+    }
+    
+    h2{
+    text-align: center;
+    margin-top: 55px;
+    color: green;
+    font-size: 38px;
+    animation: flash 0.3s alternate infinite;
+    }
+    
+    @keyframes flash{
+     from{
+       opacity: 0.1
+     }
+     to{
+       opacity: 1
+     }
+    }
+        
+</style>
+</head>
+
+
+
+<body dir="rtl" >
+
+<button id="$back" class="back" dir="ltr"> <-- </button>
+
+<h2 id="$wait"> إنتظر...</h2>
+
+<div id="$buttons">
+    
+</div>
+
+<div id="$pages">
+    
+</div>
+	
+
+<script>
+
+    // data = [ {id:Number, name:String, urls:Array-Of-Strings } ]
+    
+    let myData = []
+    
+    function ready(data){
+        myData = data
+        $wait.style.display= "none"
+        $buttons.innerHTML = myData.map(btn=>{
+            const number = String(btn.id).padStart(2,"0")
+            return `<button onclick="showPage('${btn.id}')"> ${number}. ${btn.name} </button>`
+        }).join("")
+        
+    }
+     
+    function showPage(id){
+        $buttons.style.display = "none"
+        const data = myData.find(d => d.id == id)
+        const urls = data.urls
+        const number = String(id).padStart(2,"0")
+        $pages.innerHTML = `<h1> ${number}. ${data.name} </h1>`
+        $pages.innerHTML += urls.map(url => `<img src="${url}" />`).join("")
+        $pages.style.display = "block"
+        $back.style.display = "inline-block"
+    }
+    
+    
+    $back.onclick = function(){
+        $pages.style.display = "none"
+        $buttons.style.display = "block"
+        $back.style.display = "none"
+    }    
+    
+    
+    
+    function OnStart()
+    {
+        fetch(link).then(blob => blob.json())
+        .then(data =>{
+            ready(data)    
+        })
+        .catch(e =>{
+        $wait.style.display= "none"
+            $buttons.innerHTML = `
+                <h1 style="color:red"> حدث خطأ ربما بسبب الانترنت</h1>
+                <button onclick="OnStart()" > أعد المحاولة </button>
+            `    
+        })
+    }
+
+    window.onload = OnStart
+    
+</script>
+</body>
+</html>
